@@ -45,11 +45,26 @@ Promise.all(
     return fs.outputFileSync(filePath, component, 'utf8')
   }),
 ).then(() => {
-  const entry = icons
+  const entryFile = icons
     .map((icon) => {
       return `export { default as ${icon.componentName} } from '../icons/${icon.name}.js'`
     })
     .join('\n\n')
 
-  return fs.outputFileSync('./src/index.js', entry, 'utf8')
+  const typeFile = `
+import type { DefineComponent } from 'vue'
+type RemixIconComponent = DefineComponent<{}, {}, any>
+
+${icons
+  .map((icon) => {
+    return `
+const ${icon.componentName}: RemixIconComponent
+export { ${icon.componentName} }
+`.trim()
+  })
+  .join('\n\n')}
+`.trim()
+
+  fs.outputFileSync('./src/index.js', entryFile, 'utf8')
+  fs.outputFileSync('./dist/types.d.ts', typeFile, 'utf8')
 })
