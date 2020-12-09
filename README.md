@@ -1,6 +1,6 @@
 # vue-remix-icons (Vue 3 only)
 
-> Vue port Remix Icon  
+> Vue port Remix Icon
 > Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers.
 
 Please consider starring the project to show your ❤️ and support.
@@ -25,9 +25,45 @@ See all icons here: http://remixicon.com/
 
 Note that the usage is changed from `<i class="ri-home-line"></i>` to import `RiHomeLine` .
 
+## Tips
+
+### Smart(faster) way to use
+
+Create a component name `RemixIcon`:
+
+```vue
+<template>
+  <component
+    v-if="icon"
+    :is="
+      require(`vue-remix-icons/icons/ri-${icon}-${fill ? 'fill' : 'line'}.js`)
+        .default
+    "
+  />
+</template>
+
+<script>
+export default {
+  props: {
+    icon: String,
+    fill: Boolean,
+  },
+}
+</script>
+```
+
+Then in other vue file:
+
+```vue
+<template>
+  <RemixIcon icon="home" />
+  <RemixIcon icon="home-2" fill />
+</template>
+```
+
 ## Tree-Shaking
 
-Webpack supported.
+Webpack + minified supported.
 
 ## Credits
 
