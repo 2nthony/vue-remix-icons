@@ -6,6 +6,7 @@
   "module": "dist/vue-remix-icons.es.js",
   "cdn": "dist/vue-remix-icons.min.js",
   "unpkg": "dist/vue-remix-icons.min.js",
+  "types": "dist/types.d.ts",
   "repository": {
     "type": "git",
     "url": "evillt/vue-remix-icons"
