@@ -1,5 +1,6 @@
 # vue-remix-icons (Vue 3 only)
 
+> Vue port Remix Icon  
 > Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers.
 
 Please consider starring the project to show your ❤️ and support.
