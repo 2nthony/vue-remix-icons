@@ -52,18 +52,17 @@ Promise.all(
     .join('\n\n')
 
   const typeFile = `
-import type { DefineComponent } from 'vue'
-type RemixIconComponent = DefineComponent<{}, {}, any>
-
-${icons
-  .map((icon) => {
-    return `
-const ${icon.componentName}: RemixIconComponent
-export { ${icon.componentName} }
-`.trim()
-  })
-  .join('\n\n')}
-`.trim()
+declare module 'vue-remix-icons' {
+  import type { DefineComponent } from 'vue'
+  type RemixIconComponent = DefineComponent<{}, {}, any>
+  ${icons
+    .map((icon) => {
+      return `
+  const ${icon.componentName}: RemixIconComponent
+  export { ${icon.componentName} }`
+    })
+    .join('\n')}
+}`.trim()
 
   fs.outputFileSync('./src/index.js', entryFile, 'utf8')
   fs.outputFileSync('./dist/types.d.ts', typeFile, 'utf8')
