@@ -1,0 +1,49 @@
+{
+  "name": "vue-remix-icons",
+  "description": "Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers.",
+  "version": "1.0.0",
+  "main": "dist/vue-remix-icons.cjs.js",
+  "module": "dist/vue-remix-icons.es.js",
+  "cdn": "dist/vue-remix-icons.min.js",
+  "unpkg": "dist/vue-remix-icons.min.js",
+  "repository": {
+    "type": "git",
+    "url": "evillt/vue-remix-icons"
+  },
+  "author": "evillt <ijoec123@gmail.com>",
+  "license": "Apache-2.0",
+  "keywords": [
+    "vue",
+    "vue 3",
+    "remixicon",
+    "remix",
+    "icon",
+    "icon library",
+    "icon pack"
+  ],
+  "files": [
+    "dist",
+    "icons"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "npm run build:icons & npm run build:dist",
+    "build:icons": "node build && babel src/components -d icons",
+    "build:dist": "rollup -c rollup.config.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@vue/babel-plugin-jsx": "^1.0.0-rc.4",
+    "fs-extra": "^9.0.1",
+    "pascal-case": "^3.1.2",
+    "remixicon": "^2.5.0",
+    "rollup": "^2.34.2"
+  },
+  "babel": {
+    "plugins": [
+      "@vue/babel-plugin-jsx"
+    ]
+  }
+}

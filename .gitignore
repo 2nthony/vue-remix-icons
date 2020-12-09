@@ -1,0 +1,10 @@
+node_modules
+src/
+icons/
+dist
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
