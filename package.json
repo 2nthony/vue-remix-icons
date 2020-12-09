@@ -1,6 +1,6 @@
 {
   "name": "vue-remix-icons",
-  "description": "Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers.",
+  "description": "Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers. Powered by remixicon.",
   "version": "1.0.0",
   "main": "dist/vue-remix-icons.cjs.js",
   "module": "dist/vue-remix-icons.es.js",

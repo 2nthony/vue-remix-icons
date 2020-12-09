@@ -28,6 +28,10 @@ Note that the usage is changed from `<i class="ri-home-line"></i>` to import `Ri
 
 Webpack supported.
 
+## Credits
+
+- [remixicon](https://github.com/Remix-Design/remixicon)
+
 ## Contributing
 
 1. Fork it!
