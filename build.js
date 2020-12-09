@@ -17,8 +17,8 @@ const allIconFilePaths = fs
     return res
   }, [])
 
-const createVueTemplate = (icon) => {
-  return `
+const createVueTemplate = (icon) =>
+  `
 export default {
   render() {
     return ${icon.svg.replace(
@@ -28,7 +28,6 @@ export default {
   }
 }
 `.trim()
-}
 
 const icons = allIconFilePaths.map((iconFilePath) => {
   const name = 'ri-' + path.basename(iconFilePath).replace('.svg', '')
