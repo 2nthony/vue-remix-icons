@@ -27,6 +27,7 @@
   ],
   "sideEffects": false,
   "scripts": {
+    "test": "echo 'no test'",
     "prepublishOnly": "npm run build",
     "build": "npm run build:icons & npm run build:dist",
     "build:icons": "node build && babel src/components -d icons",
