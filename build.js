@@ -62,6 +62,9 @@ declare module 'vue-remix-icons' {
   export { ${icon.componentName} }`
     })
     .join('\n')}
+
+  export type RiIconName = \n${icons.map(({ name}) => `    '${name.replace(/(ri-|-fill|-line)*/g, '')}'`).join('| \n')}\n
+  export type RiIconStyle = 'fill' | 'line'
 }`.trim()
 
   fs.outputFileSync('./src/index.js', entryFile, 'utf8')

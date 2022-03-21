@@ -29,26 +29,39 @@ Note that the usage is changed from `<i class="ri-home-line"></i>` to import `Ri
 
 ### Smart(faster) way to use
 
+In this case, all icons will be included in the bundle.
+
 Create a component name `RemixIcon`:
 
 ```vue
 <template>
   <component
     v-if="icon"
-    :is="
-      require(`vue-remix-icons/icons/ri-${icon}-${fill ? 'fill' : 'line'}.js`)
-        .default
-    "
+    :is="component"
   />
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+import { RiIconName, RiIconStyle } from 'vue-remix-icons'
+
+export default defineComponent({
   props: {
-    icon: String,
-    fill: Boolean,
+    icon: {
+      type: String as PropType<RiIconName>,
+      required: true,
+    },
+    style: {
+      type: String as PropType<RiIconStyle>,
+      default: '',
+    },
   },
-}
+  computed: {
+    component: function () {
+      return require(`vue-remix-icons/icons/ri-${this.$props.icon}${this.$props.style}.js`).default
+    },
+  },
+})
 </script>
 ```
 
@@ -56,8 +69,8 @@ Then in other vue file:
 
 ```vue
 <template>
-  <RemixIcon icon="home" />
-  <RemixIcon icon="home-2" fill />
+  <RemixIcon icon="home" style="line" />
+  <RemixIcon icon="home-2" style="fill" />
 </template>
 ```
 
