@@ -39,8 +39,8 @@
   },
   "sideEffects": false,
   "scripts": {
-    "prepare": "esno scripts/prepare.ts",
-    "build": "npm run prepare",
+    "gen": "esno scripts/gen.ts",
+    "build": "npm run gen",
     "test": "vitest run",
     "prepublishOnly": "pnpm run build"
   },
