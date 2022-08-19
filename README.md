@@ -7,7 +7,7 @@ Remix Icon is a set of open source neutral style system symbols elaborately craf
 
 ## Features
 
-- [x] Support Vue 2 & 3 by `.vue` source file.
+- [x] Support Vue 2 & 3 by `.vue` source file
 
 ## Install
 
