@@ -2,19 +2,16 @@
   "name": "vue-remix-icons",
   "description": "Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers. Powered by remixicon.",
   "version": "1.0.0",
-  "main": "dist/vue-remix-icons.cjs.js",
-  "module": "dist/vue-remix-icons.es.js",
-  "cdn": "dist/vue-remix-icons.min.js",
-  "unpkg": "dist/vue-remix-icons.min.js",
-  "types": "dist/types.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "evillt/vue-remix-icons"
-  },
-  "author": "evillt <ijoec123@gmail.com>",
+  "funding": "https://github.com/sponsors/2nthony",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": "https://github.com/2nthony/vue-remix-icons",
+  "author": "2nthony",
   "license": "Apache-2.0",
   "keywords": [
     "vue",
+    "vue 2",
     "vue 3",
     "remixicon",
     "remix",
@@ -22,30 +19,42 @@
     "icon library",
     "icon pack"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
-    "dist",
-    "icons"
+    "dist"
   ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": {
+      "require": "./dist/*",
+      "import": "./dist/*",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "sideEffects": false,
   "scripts": {
-    "test": "echo 'no test'",
-    "prepublishOnly": "npm run build",
-    "build": "npm run build:icons && npm run build:dist",
-    "build:icons": "node build.js && babel src/components -d icons",
-    "build:dist": "rollup -c rollup.config.js"
+    "prepare": "esno scripts/prepare.ts",
+    "build": "npm run prepare",
+    "test": "vitest run",
+    "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.8",
-    "@babel/core": "^7.12.9",
-    "@vue/babel-plugin-jsx": "^1.0.0-rc.4",
-    "fs-extra": "^9.0.1",
+    "@2nthony/prettier-config": "1.0.1",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^18.7.6",
+    "esno": "^0.16.3",
+    "fs-extra": "^9.1.0",
     "pascal-case": "^3.1.2",
+    "prettier": "2.7.1",
     "remixicon": "^2.5.0",
-    "rollup": "^2.34.2"
-  },
-  "babel": {
-    "plugins": [
-      "@vue/babel-plugin-jsx"
-    ]
+    "typescript": "4.7.4",
+    "vitest": "0.19.1",
+    "vue": "^3.2.37"
   }
 }
