@@ -48,19 +48,23 @@ const icons = allIconFilePaths.map<Icon>((iconFilePath) => {
 Promise.all(
   icons.map((icon) =>
     fs.outputFileSync(
-      resolveDist("components", `${icon.name}.vue`),
+      resolveDist("icons", `${icon.name}.vue`),
       resolveVueString(icon),
       "utf8",
     ),
   ),
 ).then(() => {
   let mainFile = "";
-  let dtsFile = 'import { Component } from "vue"\n\n';
+  let dtsFile = `import { Component } from "vue";
+declare module "vue-remix-icons/**.vue" {
+  export default Component;
+}
+`;
 
   for (let i = 0; i < icons.length; i++) {
     const icon = icons[i];
 
-    mainFile += `export { default as ${icon.componentName} } from "./components/${icon.name}.vue";\n`;
+    mainFile += `export { default as ${icon.componentName} } from "./icons/${icon.name}.vue";\n`;
     dtsFile += `export const ${icon.componentName}: Component;\n`;
   }
 
