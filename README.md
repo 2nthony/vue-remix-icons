@@ -1,86 +1,38 @@
-# vue-remix-icons (Vue 3 only)
+# vue-remix-icons
 
-> Vue port Remix Icon
-> Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers.
+[![version](https://img.shields.io/npm/v/vue-remix-icons?label=&color=29BC9B)](https://npm.im/vue-remix-icons)
+[![downloads](https://img.shields.io/npm/dm/vue-remix-icons?label=&color=29BC9B)](https://npm.im/vue-remix-icons)
 
-Please consider starring the project to show your ❤️ and support.
+Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers.
 
-[![NPM version](https://badgen.net/npm/v/vue-remix-icons?icon=npm)](https://npmjs.com/package/vue-remix-icons)
-[![NPM download](https://badgen.net/npm/dm/vue-remix-icons?icon=npm)](https://npmjs.com/package/vue-remix-icons)
-[![License](https://badgen.net/npm/license/vue-remix-icons)](./LICENSE)
+## Features
+
+- [x] Support Vue 2 & 3 by `.vue` source file.
 
 ## Install
 
-```console
-yarn add vue-remix-icons
+```bash
+npm i vue-remix-icons
 ```
 
 ## Usage
 
-```js
-import { RiHomeLine, RiAirplayFill } from 'vue-remix-icons'
+```ts
+import { RiHomeLine, RiAirplayFill } from "vue-remix-icons";
 ```
 
 See all icons here: http://remixicon.com/
 
-Note that the usage is changed from `<i class="ri-home-line"></i>` to import `RiHomeLine` .
-
-## Tips
-
-### Smart(faster) way to use
-
-Create a component name `RemixIcon`:
-
-```vue
-<template>
-  <component
-    v-if="icon"
-    :is="
-      require(`vue-remix-icons/icons/ri-${icon}-${fill ? 'fill' : 'line'}.js`)
-        .default
-    "
-  />
-</template>
-
-<script>
-export default {
-  props: {
-    icon: String,
-    fill: Boolean,
-  },
-}
-</script>
-```
-
-Then in other vue file:
-
-```vue
-<template>
-  <RemixIcon icon="home" />
-  <RemixIcon icon="home-2" fill />
-</template>
-```
-
-## Tree-Shaking
-
-Webpack + minified supported.
+Note that just change the usage from `<i class="ri-home-line"></i>` to import `RiHomeLine` .
 
 ## Credits
 
 - [remixicon](https://github.com/Remix-Design/remixicon)
 
-## Contributing
+## Sponsors
 
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+[![sponsors](https://cdn.jsdelivr.net/gh/2nthony/sponsors-image/sponsors.svg)](https://github.com/sponsors/2nthony)
 
-## Author
+## License
 
-**vue-remix-icons** © [evillt](https://github.com/evillt), Released under the [Apache 2.0](./LICENSE) License.
-
-Authored and maintained by **EVILLT** with help from contributors ([list](https://github.com/evillt/vue-remix-icons/contributors)).
-
-> [evila.me](https://evila.me) · GitHub [@evillt](https://github.com/evillt) · Twitter [@evillt](https://twitter.com/evillt)
+Apache-2.0 &copy; [2nthony](https://github.com/sponsors/2nthony)
