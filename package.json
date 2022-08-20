@@ -3,9 +3,9 @@
   "description": "Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers. Powered by remixicon.",
   "version": "1.0.0",
   "funding": "https://github.com/sponsors/2nthony",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./index.js",
+  "module": "./index.js",
+  "types": "./index.d.ts",
   "repository": "https://github.com/2nthony/vue-remix-icons",
   "author": "2nthony",
   "license": "Apache-2.0",
@@ -23,18 +23,20 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "icons",
+    "index.js",
+    "index.d.ts"
   ],
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./index.js",
+      "import": "./index.js",
+      "types": "./index.d.ts"
     },
-    "./*": {
-      "require": "./dist/*",
-      "import": "./dist/*",
-      "types": "./dist/index.d.ts"
+    "./icons/*": {
+      "require": "./icons/*",
+      "import": "./icons/*",
+      "types": "./index.d.ts"
     }
   },
   "sideEffects": false,
