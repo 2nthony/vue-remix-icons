@@ -75,15 +75,16 @@ async function genIcons(icons: Icon[]) {
 
 async function collectFileString(icons: Icon[]) {
   let mainFile = "";
-  let dtsFile = `import { Component } from "vue";
+  let dtsFile = `import type { DefineComponent, SVGAttributes } from "vue";
 declare module "vue-remix-icons/icons/*.vue" {
-  export default Component;
+  const component: DefineComponent<SVGAttributes, {}, any>;
+  export default component;
 }
 `;
 
   loopIcons(icons, (icon) => {
     mainFile += `export { default as ${icon.componentName} } from "./icons/${icon.componentName}.vue";\n`;
-    dtsFile += `export const ${icon.componentName}: Component;\n`;
+    dtsFile += `export const ${icon.componentName}: DefineComponent<SVGAttributes, {}, any>;\n`;
   });
 
   return {
