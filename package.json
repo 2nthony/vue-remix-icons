@@ -45,10 +45,8 @@
   },
   "devDependencies": {
     "@2nthony/prettier-config": "1.0.1",
-    "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.7.6",
     "esno": "^0.16.3",
-    "fs-extra": "^9.1.0",
     "pascal-case": "^3.1.2",
     "prettier": "2.7.1",
     "remixicon": "^2.5.0",
