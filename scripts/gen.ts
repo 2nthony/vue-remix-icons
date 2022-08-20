@@ -2,6 +2,8 @@ import path from "path";
 import { pascalCase, pascalCaseTransformMerge } from "pascal-case";
 import { mkdir, readdir, readFile, writeFile } from "fs/promises";
 
+const PREFIX = "ri-";
+
 type Icon = {
   name: string;
   svg: string;
@@ -43,7 +45,7 @@ async function collectAllIconMetas(): Promise<Icon[]> {
 
     for (let j = 0; j < iconDirs.length; j++) {
       const iconName = iconDirs[j];
-      const name = path.basename(iconName).replace(".svg", "");
+      const name = PREFIX + path.basename(iconName).replace(".svg", "");
       const componentName = pascalCase(name, {
         transform: pascalCaseTransformMerge,
       });
