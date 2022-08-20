@@ -1,6 +1,6 @@
 import path from "path";
-import fs from "fs-extra";
 import { pascalCase, pascalCaseTransformMerge } from "pascal-case";
+import { mkdir, readdir, readFile, writeFile } from "fs/promises";
 
 type Icon = {
   name: string;
@@ -8,27 +8,10 @@ type Icon = {
   componentName: string;
 };
 
-const resolveDist = (...dir: string[]) =>
-  path.resolve(__dirname, "..", "dist", ...dir);
+const resolveRoot = (...dir: string[]) => path.resolve(__dirname, "..", ...dir);
 
-const remixiconsDir = path.resolve(
-  __dirname,
-  "..",
-  "node_modules",
-  "remixicon",
-  "icons",
-);
-
-const allIconFilePaths = fs
-  .readdirSync(remixiconsDir)
-  .map((foldName) => path.join(remixiconsDir, foldName))
-  .reduce<string[]>((res, foldPath) => {
-    const iconFileNames = fs.readdirSync(foldPath);
-    iconFileNames.forEach((iconFileName) => {
-      res.push(path.join(foldPath, iconFileName));
-    });
-    return res;
-  }, []);
+const resolveRemixiconDir = (...dir: string[]) =>
+  path.resolve(__dirname, "..", "node_modules", "remixicon", "icons", ...dir);
 
 const resolveVueString = (icon: Icon) =>
   `<template>
@@ -36,38 +19,83 @@ const resolveVueString = (icon: Icon) =>
 </template>
 `.trim();
 
-const icons = allIconFilePaths.map<Icon>((iconFilePath) => {
-  const name = "ri-" + path.basename(iconFilePath).replace(".svg", "");
-  return {
-    name,
-    componentName: pascalCase(name, { transform: pascalCaseTransformMerge }),
-    svg: fs.readFileSync(iconFilePath, "utf8"),
-  };
-});
+gen();
 
-Promise.all(
-  icons.map((icon) =>
-    fs.outputFileSync(
-      resolveDist("icons", `${icon.name}.vue`),
+async function gen() {
+  const icons = await collectAllIconMetas();
+  const { mainFile, dtsFile } = await collectFileString(icons);
+
+  // ensure path: `/icons`
+  await mkdir(resolveRoot("icons"), { recursive: true });
+
+  await genIcons(icons);
+  await writeFile(resolveRoot("index.js"), mainFile, "utf8");
+  await writeFile(resolveRoot("index.d.ts"), dtsFile, "utf8");
+}
+
+async function collectAllIconMetas(): Promise<Icon[]> {
+  const res: Icon[] = [];
+  const categoryDirs = await readdir(resolveRemixiconDir());
+
+  for (let i = 0; i < categoryDirs.length; i++) {
+    const categoryDir = categoryDirs[i];
+    const iconDirs = await readdir(resolveRemixiconDir(categoryDir));
+
+    for (let j = 0; j < iconDirs.length; j++) {
+      const iconName = iconDirs[j];
+      const name = path.basename(iconName).replace(".svg", "");
+      const componentName = pascalCase(name, {
+        transform: pascalCaseTransformMerge,
+      });
+      const svg = await readFile(
+        resolveRemixiconDir(categoryDir, iconName),
+        "utf8",
+      );
+
+      res.push({
+        name,
+        componentName,
+        svg,
+      });
+    }
+  }
+
+  return res;
+}
+
+async function genIcons(icons: Icon[]) {
+  loopIcons(icons, async (icon) => {
+    await writeFile(
+      resolveRoot("icons", `${icon.componentName}.vue`),
       resolveVueString(icon),
       "utf8",
-    ),
-  ),
-).then(() => {
+    );
+  });
+}
+
+async function collectFileString(icons: Icon[]) {
   let mainFile = "";
-  let dtsFile = `import { Component } from "vue";
-declare module "vue-remix-icons/**.vue" {
-  export default Component;
+  let dtsFile = `import type { DefineComponent, SVGAttributes } from "vue";
+declare module "vue-remix-icons/icons/*.vue" {
+  const component: DefineComponent<SVGAttributes, {}, any>;
+  export default component;
 }
 `;
 
+  loopIcons(icons, (icon) => {
+    mainFile += `export { default as ${icon.componentName} } from "./icons/${icon.componentName}.vue";\n`;
+    dtsFile += `export const ${icon.componentName}: DefineComponent<SVGAttributes, {}, any>;\n`;
+  });
+
+  return {
+    mainFile,
+    dtsFile,
+  };
+}
+
+function loopIcons(icons: Icon[], fn: (icon: Icon) => any | Promise<any>) {
   for (let i = 0; i < icons.length; i++) {
     const icon = icons[i];
-
-    mainFile += `export { default as ${icon.componentName} } from "./icons/${icon.name}.vue";\n`;
-    dtsFile += `export const ${icon.componentName}: Component;\n`;
+    fn(icon);
   }
-
-  fs.outputFileSync(resolveDist("index.js"), mainFile, "utf8");
-  fs.outputFileSync(resolveDist("index.d.ts"), dtsFile, "utf8");
-});
+}

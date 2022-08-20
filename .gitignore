@@ -1,5 +1,8 @@
 node_modules
 dist
+icons
+index.js
+index.d.ts
 
 # Log files
 npm-debug.log*
