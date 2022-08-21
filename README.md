@@ -7,7 +7,8 @@ Remix Icon is a set of open source neutral style system symbols elaborately craf
 
 ## Features
 
-- [x] Support Vue 2 & 3 by `.vue` source file
+- [x] Types ready
+- [x] Support Vue 2 by `.vue` source file
 
 ## Install
 
@@ -17,13 +18,37 @@ npm i vue-remix-icons
 
 ## Usage
 
-```ts
-import { RiHomeLine, RiAirplayFill } from "vue-remix-icons";
+```html
+<template>
+  <RiHomeLine />
+</tempalte>
+
+<script>
+import { RiHomeLine } from "vue-remix-icons";
+
+export default {
+  components: {
+    RiHomeLine,
+  },
+}
+</script>
 ```
 
 See all icons here: http://remixicon.com/
 
 Note that just change the usage from `<i class="ri-home-line"></i>` to import `RiHomeLine` .
+
+## Details
+
+```html
+<RiHomeLine />
+```
+
+Will render as:
+
+```html
+<svg class="remixicon ri-home-line">...</svg>
+```
 
 ## Credits
 
