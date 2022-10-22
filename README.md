@@ -5,6 +5,7 @@
 
 Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers.
 
+
 ## Features
 
 - [x] Types ready
@@ -17,6 +18,8 @@ npm i vue-remix-icons
 ```
 
 ## Usage
+
+Notice: for support Vue 2 & Vue 3 projects, the all imported icons is a Vue file, so you need to use this lib under the JS bundler.
 
 ```html
 <template>
