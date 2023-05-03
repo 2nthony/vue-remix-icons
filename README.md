@@ -9,7 +9,7 @@ Remix Icon is a set of open source neutral style system symbols elaborately craf
 ## Features
 
 - [x] Types ready
-- [x] Support Vue 2 by `.vue` source file
+- [x] Support Vue 2 and Vue 3
 - [x] Tree-Shaking
 
 ## Install
@@ -20,7 +20,7 @@ npm i vue-remix-icons
 
 ## Usage
 
-Notice: for support Vue 2 & Vue 3 projects, the all imported icons is a Vue file, so you need to use this lib under the JS bundler.
+Notice: for support Vue 2 & Vue 3 projects, the all imported icons is a Vue file, so you need to use this lib under the JS bundler like vite, webpack or other Vue framework.
 
 ```html
 <template>
@@ -31,7 +31,7 @@ Notice: for support Vue 2 & Vue 3 projects, the all imported icons is a Vue file
 // tree-shaking
 import { RiHomeLine } from "vue-remix-icons";
 // if not, import the one you needed
-import RiHomeLine from "vue-remix-icons/icons/RiHomeLine.vue"
+import RiHomeLine from "vue-remix-icons/icons/ri-home-line.vue"
 
 export default {
   components: {
