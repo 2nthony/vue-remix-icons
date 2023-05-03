@@ -23,6 +23,11 @@
       "require": "./index.js",
       "import": "./index.js"
     },
+    "./*": {
+      "types": "./index.d.ts",
+      "require": "./icons/*",
+      "import": "./icons/*"
+    },
     "./icons/*": {
       "types": "./index.d.ts",
       "require": "./icons/*",
