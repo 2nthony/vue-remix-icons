@@ -70,7 +70,7 @@ async function collectAllIconMetas(): Promise<Icon[]> {
 async function genIcons(icons: Icon[]) {
   loopIcons(icons, async (icon) => {
     await writeFile(
-      resolveRoot('icons', `${icon.componentName}.vue`),
+      resolveRoot('icons', `${icon.name}.vue`),
       resolveVueString(icon),
       'utf8',
     )
@@ -88,7 +88,7 @@ declare module "vue-remix-icons/icons/*.vue" {
 `
 
   loopIcons(icons, (icon) => {
-    mainFile += `export { default as ${icon.componentName} } from "./icons/${icon.componentName}.vue";\n`
+    mainFile += `export { default as ${icon.componentName} } from "./icons/${icon.name}.vue";\n`
     dtsFile += `export const ${icon.componentName}: SVGComponent;\n`
   })
 
