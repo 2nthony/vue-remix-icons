@@ -57,6 +57,17 @@ Will render as:
 <svg class="remixicon ri-home-line">...</svg>
 ```
 
+## Breaking Changes
+
+### `v3.0.0`
+
+Generated file now kebab-case, avoid system file cases.
+
+```diff
+- import RiHomeLine from "vue-remix-icons/icons/RiHomeLine.vue"
++ import RiHomeLine from "vue-remix-icons/icons/ri-home-line.vue"
+```
+
 ## Credits
 
 - [remixicon](https://github.com/Remix-Design/remixicon)
