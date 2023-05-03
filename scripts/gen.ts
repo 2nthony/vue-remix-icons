@@ -10,7 +10,9 @@ interface Icon {
   componentName: string
 }
 
-const resolveRoot = (...dir: string[]) => path.resolve(__dirname, '..', ...dir)
+function resolveRoot(...dir: string[]) {
+  return path.resolve(__dirname, '..', ...dir)
+}
 
 function resolveRemixiconDir(...dir: string[]) {
   return path.resolve(__dirname, '..', 'node_modules', 'remixicon', 'icons', ...dir)
@@ -41,34 +43,29 @@ async function collectAllIconMetas(): Promise<Icon[]> {
   const res: Icon[] = []
   const categoryDirs = await readdir(resolveRemixiconDir())
 
-  for (let i = 0; i < categoryDirs.length; i++) {
-    const categoryDir = categoryDirs[i]
-    const iconDirs = await readdir(resolveRemixiconDir(categoryDir))
+  await loop(categoryDirs, async (categoryDir) => {
+    const iconsDirs = await readdir(resolveRemixiconDir(categoryDir))
 
-    for (let j = 0; j < iconDirs.length; j++) {
-      const iconName = iconDirs[j]
+    await loop(iconsDirs, async (iconName) => {
       const name = PREFIX + path.basename(iconName).replace('.svg', '')
       const componentName = pascalCase(name, {
         transform: pascalCaseTransformMerge,
       })
-      const svg = await readFile(
-        resolveRemixiconDir(categoryDir, iconName),
-        'utf8',
-      )
+      const svg = await readFile(resolveRemixiconDir(categoryDir, iconName), 'utf8')
 
       res.push({
         name,
         componentName,
         svg,
       })
-    }
-  }
+    })
+  })
 
   return res
 }
 
 async function genIcons(icons: Icon[]) {
-  loopIcons(icons, async (icon) => {
+  await loop(icons, async (icon) => {
     await writeFile(
       resolveRoot('icons', `${icon.name}.vue`),
       resolveVueString(icon),
@@ -87,7 +84,7 @@ declare module "vue-remix-icons/icons/*.vue" {
 }
 `
 
-  loopIcons(icons, (icon) => {
+  await loop(icons, (icon) => {
     mainFile += `export { default as ${icon.componentName} } from "./icons/${icon.name}.vue";\n`
     dtsFile += `export const ${icon.componentName}: SVGComponent;\n`
   })
@@ -98,9 +95,9 @@ declare module "vue-remix-icons/icons/*.vue" {
   }
 }
 
-function loopIcons(icons: Icon[], fn: (icon: Icon) => any | Promise<any>) {
-  for (let i = 0; i < icons.length; i++) {
-    const icon = icons[i]
-    fn(icon)
+async function loop<T>(data: T[], cb: (value: T) => void | Promise<void>) {
+  for (let i = 0; i < data.length; i++) {
+    const el = data[i]
+    await cb(el)
   }
 }
