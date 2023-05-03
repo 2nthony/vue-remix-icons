@@ -61,7 +61,7 @@ Will render as:
 
 ### `v3.0.0`
 
-Generated file now kebab-case, avoid system file cases.
+Generated file now kebab-case, reason see #10.
 
 ```diff
 - import RiHomeLine from "vue-remix-icons/icons/RiHomeLine.vue"
