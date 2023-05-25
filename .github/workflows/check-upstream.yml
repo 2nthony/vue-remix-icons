@@ -1,0 +1,36 @@
+name: check upstream
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    setps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+      - name: Cache ~/.pnpm-store
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ matrix.node-version }}-release-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node-version }}-release-${{ env.cache-name }}-
+            ${{ runner.os }}-${{ matrix.node-version }}-release-
+            ${{ runner.os }}-
+      - run: npm i -g pnpm
+      - run: pnpm i
+      - run: pnpm up remixicon
+
+      - name: commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'fix(upstream): sync remixicon version'
+          add: 'package.json pnpm-lock.yaml'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
