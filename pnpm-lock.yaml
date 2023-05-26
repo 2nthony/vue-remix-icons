@@ -17,8 +17,8 @@ devDependencies:
     specifier: ^3.1.2
     version: 3.1.2
   remixicon:
-    specifier: ^3.2.0
-    version: 3.2.0
+    specifier: ^3.3.0
+    version: 3.3.0
   typescript:
     specifier: 5.0.4
     version: 5.0.4
@@ -2437,8 +2437,8 @@ packages:
       jsesc: 0.5.0
     dev: true
 
-  /remixicon@3.2.0:
-    resolution: {integrity: sha512-ADh4EQE4UGtm9GHqD+TIfVp1b0zeWso6efaMAnejdB6/7Z1W02Ka5K8khQaz+LNgIqC6dSZxCvXMWNalYWHiNQ==}
+  /remixicon@3.3.0:
+    resolution: {integrity: sha512-iNeRbwVgd8Ef467IjMd/+joFWSBOYfqsLtxtSzsS8fWn75a1H7sgGu5uWE4c3NLjP2C1giFlx8gw63qZd96yJQ==}
     dev: true
 
   /resolve-from@4.0.0:
