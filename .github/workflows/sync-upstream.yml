@@ -30,7 +30,7 @@ jobs:
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          message: 'feat(upstream): sync remixicon version'
+          message: 'feat(upstream): auto sync remixicon version'
           add: 'package.json pnpm-lock.yaml'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
