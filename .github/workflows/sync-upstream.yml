@@ -1,4 +1,4 @@
-name: check upstream
+name: sync-upstream
 
 on:
   schedule:
@@ -30,7 +30,7 @@ jobs:
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          message: 'fix(upstream): sync remixicon version'
+          message: 'feat(upstream): sync remixicon version'
           add: 'package.json pnpm-lock.yaml'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
