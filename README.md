@@ -5,6 +5,7 @@
 
 Remix Icon is a set of open source neutral style system symbols elaborately crafted for designers and developers.
 
+**Notics**: this package will auto release a new feature version when then upstream package([remixicon](https://github.com/Remix-Design/remixicon)) released, if you facing any issues, please open an issue to let me know.
 
 ## Features
 
