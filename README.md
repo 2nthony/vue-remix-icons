@@ -46,6 +46,19 @@ See all icons here: http://remixicon.com/
 
 Note that just change the usage from `<i class="ri-home-line"></i>` to import `RiHomeLine` .
 
+### Nuxt 3
+
+Transpile vue-remix-icons, see [#13](https://github.com/2nthony/vue-remix-icons/issues/13).
+
+```ts
+// https://v3.nuxtjs.org/api/configuration/nuxt.config
+export default defineNuxtConfig({
+  build: {
+    transpile: ['vue-remix-icons'],
+  },
+})
+```
+
 ## Details
 
 ```html
