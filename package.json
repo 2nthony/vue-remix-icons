@@ -47,6 +47,7 @@
   ],
   "scripts": {
     "gen": "esno scripts/gen.ts",
+    "check-upstream-version": "esno scripts/check-upstream-version.ts",
     "build": "npm run gen",
     "prepublishOnly": "pnpm run build",
     "lint": "eslint scripts",
@@ -57,6 +58,7 @@
     "@types/node": "^18.16.3",
     "eslint": "^8.39.0",
     "esno": "^0.16.3",
+    "latest-version": "^7.0.0",
     "pascal-case": "^3.1.2",
     "remixicon": "^3.5.0",
     "typescript": "5.0.4",

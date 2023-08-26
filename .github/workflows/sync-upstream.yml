@@ -23,9 +23,15 @@ jobs:
             ${{ runner.os }}-${{ matrix.node-version }}-release-${{ env.cache-name }}-
             ${{ runner.os }}-${{ matrix.node-version }}-release-
             ${{ runner.os }}-
+
       - run: npm i -g pnpm
       - run: pnpm i
-      - run: pnpm up remixicon
+
+      - id: check_upstream
+        run: pnpm run check-upstream-version
+
+      - if: ${{ steps.check_upstream.outputs.flag == 1}}
+        run: pnpm up remixicon
 
       - name: commit
         uses: EndBug/add-and-commit@v9
