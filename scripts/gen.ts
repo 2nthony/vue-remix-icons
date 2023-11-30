@@ -1,104 +1,103 @@
-import path from "path";
-import { pascalCase, pascalCaseTransformMerge } from "pascal-case";
-import { mkdir, readdir, readFile, writeFile } from "fs/promises";
+import path from 'node:path'
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
+import { pascalCase, pascalCaseTransformMerge } from 'pascal-case'
 
-const PREFIX = "ri-";
+const PREFIX = 'ri-'
 
-type Icon = {
-  name: string;
-  svg: string;
-  componentName: string;
-};
+interface Icon {
+  name: string
+  svg: string
+  componentName: string
+}
 
-const resolveRoot = (...dir: string[]) => path.resolve(__dirname, "..", ...dir);
+function resolveRoot(...dir: string[]) {
+  return path.resolve(__dirname, '..', ...dir)
+}
 
-const resolveRemixiconDir = (...dir: string[]) =>
-  path.resolve(__dirname, "..", "node_modules", "remixicon", "icons", ...dir);
+function resolveRemixiconDir(...dir: string[]) {
+  return path.resolve(__dirname, '..', 'node_modules', 'remixicon', 'icons', ...dir)
+}
 
-const resolveVueString = (icon: Icon) =>
-  `<template>
+function resolveVueString(icon: Icon) {
+  return `<template>
   ${icon.svg.replace(/<svg([^>]+)>/, `<svg class="remixicon ${icon.name}"$1>`)}
 </template>
-`.trim();
+`.trim()
+}
 
-gen();
+gen()
 
 async function gen() {
-  const icons = await collectAllIconMetas();
-  const { mainFile, dtsFile } = await collectFileString(icons);
+  const icons = await collectAllIconMetas()
+  const { mainFile, dtsFile } = await collectFileString(icons)
 
   // ensure path: `/icons`
-  await mkdir(resolveRoot("icons"), { recursive: true });
+  await mkdir(resolveRoot('icons'), { recursive: true })
 
-  await genIcons(icons);
-  await writeFile(resolveRoot("index.js"), mainFile, "utf8");
-  await writeFile(resolveRoot("index.d.ts"), dtsFile, "utf8");
+  await genIcons(icons)
+  await writeFile(resolveRoot('index.js'), mainFile, 'utf8')
+  await writeFile(resolveRoot('index.d.ts'), dtsFile, 'utf8')
 }
 
 async function collectAllIconMetas(): Promise<Icon[]> {
-  const res: Icon[] = [];
-  const categoryDirs = await readdir(resolveRemixiconDir());
+  const res: Icon[] = []
+  const categoryDirs = await readdir(resolveRemixiconDir())
 
-  for (let i = 0; i < categoryDirs.length; i++) {
-    const categoryDir = categoryDirs[i];
-    const iconDirs = await readdir(resolveRemixiconDir(categoryDir));
+  await loop(categoryDirs, async (categoryDir) => {
+    const iconsDirs = await readdir(resolveRemixiconDir(categoryDir))
 
-    for (let j = 0; j < iconDirs.length; j++) {
-      const iconName = iconDirs[j];
-      const name = PREFIX + path.basename(iconName).replace(".svg", "");
+    await loop(iconsDirs, async (iconName) => {
+      const name = PREFIX + path.basename(iconName).replace('.svg', '')
       const componentName = pascalCase(name, {
         transform: pascalCaseTransformMerge,
-      });
-      const svg = await readFile(
-        resolveRemixiconDir(categoryDir, iconName),
-        "utf8",
-      );
+      })
+      const svg = await readFile(resolveRemixiconDir(categoryDir, iconName), 'utf8')
 
       res.push({
         name,
         componentName,
         svg,
-      });
-    }
-  }
+      })
+    })
+  })
 
-  return res;
+  return res
 }
 
 async function genIcons(icons: Icon[]) {
-  loopIcons(icons, async (icon) => {
+  await loop(icons, async (icon) => {
     await writeFile(
-      resolveRoot("icons", `${icon.componentName}.vue`),
+      resolveRoot('icons', `${icon.name}.vue`),
       resolveVueString(icon),
-      "utf8",
-    );
-  });
+      'utf8',
+    )
+  })
 }
 
 async function collectFileString(icons: Icon[]) {
-  let mainFile = "";
+  let mainFile = ''
   let dtsFile = `import type { DefineComponent, SVGAttributes } from "vue";
 type SVGComponent = DefineComponent<SVGAttributes, {}, any>;
 declare module "vue-remix-icons/icons/*.vue" {
   const component: SVGComponent;
   export default component;
 }
-`;
+`
 
-  loopIcons(icons, (icon) => {
-    mainFile += `export { default as ${icon.componentName} } from "./icons/${icon.componentName}.vue";\n`;
-    dtsFile += `export const ${icon.componentName}: SVGComponent;\n`;
-  });
+  await loop(icons, (icon) => {
+    mainFile += `export { default as ${icon.componentName} } from "./icons/${icon.name}.vue";\n`
+    dtsFile += `export const ${icon.componentName}: SVGComponent;\n`
+  })
 
   return {
     mainFile,
     dtsFile,
-  };
+  }
 }
 
-function loopIcons(icons: Icon[], fn: (icon: Icon) => any | Promise<any>) {
-  for (let i = 0; i < icons.length; i++) {
-    const icon = icons[i];
-    fn(icon);
+async function loop<T>(data: T[], cb: (value: T) => void | Promise<void>) {
+  for (let i = 0; i < data.length; i++) {
+    const el = data[i]
+    await cb(el)
   }
 }
