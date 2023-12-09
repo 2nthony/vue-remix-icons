@@ -1,4 +1,6 @@
-// log 1 means need to update, 0 means no need to update
+// flag
+// flag=1 means need to update, flag=0 means no need to update
+// also used in sync-upstream.yml
 
 import latestVersion from 'latest-version'
 import pkg from '../package.json'
