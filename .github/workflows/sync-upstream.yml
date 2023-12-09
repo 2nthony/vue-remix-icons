@@ -28,7 +28,7 @@ jobs:
       - run: pnpm i
 
       - id: check_upstream
-        run: pnpm run check-upstream-version
+        run: echo | pnpm run check-upstream-version >> "$GITHUB_OUTPUT"
 
       - if: ${{ steps.check_upstream.outputs.flag == 1}}
         run: pnpm up remixicon
