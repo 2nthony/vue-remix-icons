@@ -47,7 +47,8 @@
   ],
   "scripts": {
     "gen": "esno scripts/gen.ts",
-    "check-upstream-version": "esno scripts/check-upstream-version.ts",
+    "echo-remixicon-bump": "esno scripts/echo-remixicon-bump.ts",
+    "echo-remixicon-version": "esno scripts/echo-remixicon-version.ts",
     "build": "npm run gen",
     "prepublishOnly": "pnpm run build",
     "lint": "eslint scripts",
