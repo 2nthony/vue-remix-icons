@@ -32,14 +32,14 @@ jobs:
       - run: pnpm i
 
       - id: echo_remixicon_bump
-        run: echo | pnpm run echo-remixicon-bump | grep bump >> "$GITHUB_OUTPUT"
+        run: echo | pnpm run echo-remixicon-bump | grep bump= >> "$GITHUB_OUTPUT"
 
       - if: ${{ steps.echo_remixicon_bump.outputs.bump == 1}}
         run: pnpm up remixicon
 
       - if: ${{ steps.echo_remixicon_bump.outputs.bump == 1}}
         id: echo_remixicon_version
-        run: echo | pnpm run echo-remixicon-version | grep version >> "$GITHUB_OUTPUT"
+        run: echo | pnpm run echo-remixicon-version | grep version= >> "$GITHUB_OUTPUT"
 
       - name: commit
         uses: EndBug/add-and-commit@v9
