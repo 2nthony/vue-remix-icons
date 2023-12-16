@@ -1,3 +1,9 @@
+# Attention
+
+Now remixicon now support Vue 3 officially, this package will continue sync upstream for Vue 2 users, but if you use Vue 3, better use official package!
+
+---
+
 # vue-remix-icons
 
 [![version](https://img.shields.io/npm/v/vue-remix-icons?label=&color=29BC9B)](https://npm.im/vue-remix-icons)
