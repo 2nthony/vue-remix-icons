@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   sync:
@@ -35,7 +35,7 @@ jobs:
         run: echo | pnpm run echo-remixicon-bump | grep bump= >> "$GITHUB_OUTPUT"
 
       - if: ${{ steps.echo_remixicon_bump.outputs.bump == 1}}
-        run: pnpm up remixicon
+        run: pnpm up remixicon@latest
 
       - if: ${{ steps.echo_remixicon_bump.outputs.bump == 1}}
         id: echo_remixicon_version
@@ -44,7 +44,7 @@ jobs:
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          message: 'feat(upstream): auto sync remixicon to ${{ steps.echo_remixicon_version.outputs.version}}'
-          add: 'package.json pnpm-lock.yaml'
+          message: "feat(upstream): auto sync remixicon to ${{ steps.echo_remixicon_version.outputs.version}}"
+          add: "package.json pnpm-lock.yaml"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
