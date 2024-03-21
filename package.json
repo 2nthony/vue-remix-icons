@@ -62,7 +62,7 @@
     "latest-version": "^7.0.0",
     "pascal-case": "^3.1.2",
     "remixicon": "^4.2.0",
-    "typescript": "5.0.4",
+    "typescript": "5.4.3",
     "vue": "^3.2.47"
   }
 }
