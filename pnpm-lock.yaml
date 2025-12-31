@@ -27,8 +27,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2
       remixicon:
-        specifier: ^4.7.0
-        version: 4.7.0
+        specifier: ^4.8.0
+        version: 4.8.0
       typescript:
         specifier: 5.0.4
         version: 5.0.4
@@ -1418,8 +1418,8 @@ packages:
     resolution: {integrity: sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==}
     hasBin: true
 
-  remixicon@4.7.0:
-    resolution: {integrity: sha512-g2pHOofQWARWpxdbrQu5+K3C8ZbqguQFzE54HIMWFCpFa63pumaAltIgZmFMRQpKKBScRWQASQfWxS9asNCcHQ==}
+  remixicon@4.8.0:
+    resolution: {integrity: sha512-8qTM/bWkmsAWitvcL9XrVPVdqHRrdmnNp4zCFBdmIHBygxfHWwoK6NzitbiMyRzjcXKBMlS/ab5M65/ZlxJTVA==}
 
   resolve-alpn@1.2.1:
     resolution: {integrity: sha512-0a1F4l73/ZFZOakJnQ3FvkJ2+gSTQWz/r2KE5OdDY0TxPm5h4GkqkWWfM47T7HsbnOtcJVEF4epCVy6u7Q3K+g==}
@@ -3227,7 +3227,7 @@ snapshots:
     dependencies:
       jsesc: 0.5.0
 
-  remixicon@4.7.0: {}
+  remixicon@4.8.0: {}
 
   resolve-alpn@1.2.1: {}
 
