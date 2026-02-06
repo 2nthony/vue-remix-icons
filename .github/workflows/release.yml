@@ -19,23 +19,13 @@ jobs:
       id-token: write # to enable use of OIDC for trusted publishing and npm provenance
     if: "!contains(github.event.head_commit.message, 'skip-release') && !contains(github.event.head_commit.message, 'skip-ci') && github.event_name != 'pull_request'"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - name: Cache ~/.pnpm-store
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ matrix.node-version }}-release-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-release-${{ env.cache-name }}-
-            ${{ runner.os }}-${{ matrix.node-version }}-release-
-            ${{ runner.os }}-
-      - run: npm i -g pnpm
-      - run: pnpm i
-      - run: pnpx semantic-release --branches main
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: release
+        run: pnpx semantic-release --branches main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

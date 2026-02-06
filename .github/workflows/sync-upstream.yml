@@ -11,40 +11,32 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+
+      # go output: version=1.0.0,bump=1
+      - id: sync_info
+        run: |
+          result=$(go run ./cmd/sync_info)
+          echo "$result" | tr ',' '\n' >> $GITHUB_OUTPUT
+
+      - if: ${{ steps.sync_info.outputs.bump == 1}}
+        name: setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: lts/*
-      - name: Cache ~/.pnpm-store
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ matrix.node-version }}-release-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-release-${{ env.cache-name }}-
-            ${{ runner.os }}-${{ matrix.node-version }}-release-
-            ${{ runner.os }}-
+          cache: true
 
-      - run: npm i -g pnpm
-      - run: pnpm i
-
-      - id: echo_remixicon_bump
-        run: echo | pnpm run echo-remixicon-bump | grep bump= >> "$GITHUB_OUTPUT"
-
-      - if: ${{ steps.echo_remixicon_bump.outputs.bump == 1}}
+      - if: ${{ steps.sync_info.outputs.bump == 1}}
+        name: update remixicon
         run: pnpm up remixicon@latest
-
-      - if: ${{ steps.echo_remixicon_bump.outputs.bump == 1}}
-        id: echo_remixicon_version
-        run: echo | pnpm run echo-remixicon-version | grep version= >> "$GITHUB_OUTPUT"
 
       - name: commit
         uses: EndBug/add-and-commit@v9
         with:
-          message: "feat(upstream): auto sync remixicon to ${{ steps.echo_remixicon_version.outputs.version}}"
+          message: "feat(upstream): auto sync remixicon to ${{ steps.sync_info.outputs.version}}"
           add: "package.json pnpm-lock.yaml"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
