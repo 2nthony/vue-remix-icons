@@ -24,6 +24,11 @@ jobs:
         with:
           go-version-file: "go.mod"
 
+      - name: node
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
