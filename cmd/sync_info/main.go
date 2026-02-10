@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"vue-remix-icons/pkg/npm"
 	"vue-remix-icons/pkg/remixicon"
 )

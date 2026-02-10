@@ -5,11 +5,14 @@ import (
 	"os"
 	"regexp"
 	"strings"
+
 	"vue-remix-icons/pkg/remixicon"
 )
 
-const REMIXICON_PATH = "node_modules/remixicon/icons"
-const OUTPUT_DIR = "icons"
+const (
+	REMIXICON_PATH = "node_modules/remixicon/icons"
+	OUTPUT_DIR     = "icons"
+)
 
 func main() {
 	icons, err := remixicon.CollectIcons(REMIXICON_PATH)
@@ -55,9 +58,9 @@ func buildVueTemplate(icon remixicon.Icon) string {
 }
 
 func mkdir(name string) error {
-	return os.Mkdir(name, 0755)
+	return os.Mkdir(name, 0o755)
 }
 
 func writeFile(name string, data []byte) error {
-	return os.WriteFile(name, data, 0644)
+	return os.WriteFile(name, data, 0o644)
 }

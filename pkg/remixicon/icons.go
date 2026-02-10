@@ -76,7 +76,6 @@ func CollectIcons(basePath string) ([]Icon, error) {
 
 			return nil
 		})
-
 		if err != nil {
 			fmt.Println("error")
 		}
@@ -86,8 +85,8 @@ func CollectIcons(basePath string) ([]Icon, error) {
 }
 
 func BuildMainFileString(icons []Icon) (string, string) {
-	var mainFile = ``
-	var dtsFile = `import type { DefineComponent, SVGAttributes } from "vue";
+	mainFile := ``
+	dtsFile := `import type { DefineComponent, SVGAttributes } from "vue";
 type SVGComponent = DefineComponent<SVGAttributes, {}, any>;
 declare module "vue-remix-icons/icons/*.vue" {
   const component: SVGComponent;
